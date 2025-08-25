@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserAccountType {
+  DENTIST
+  PATIENT
+}
+
+model User {
+  userId       String          @id //cognito sub/user_id
+  email        String          @unique
+  firstName    String?
+  lastName     String?
+  profileImage String?
+  accountType  UserAccountType @default(PATIENT)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  patientAppointment Appointments[]    @relation("AppointmentsToUser")
+  dentistAppointment Appointments[]    @relation("AppointmentsToDentist")
+  dental             DentalInsurance[]
+}
+
+enum AppointmentType {
+  NPE
+  NPE_NP_SRP
+  CLEANING
+  FILLING
+  EXTRACTION
+  ROOT_CANAL
+  CROWN
+}
+
+enum AppointmentTime {
+  MORNING
+  AFTERNOON
+  ANYTIME
+}
+
+enum AppointmentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  COMPLETED
+  RESCHEDULED
+}
+
+model Appointments {
+  id                       Int               @id @default(autoincrement()) //cognito sub/user_id
+  userId                   String
+  dentistId                String
+  patientGivenName         String?
+  patientLastName          String?
+  dateOfBirth              DateTime?
+  note                     String?
+  dentalInsuranceId        Int?
+  appType                  AppointmentType
+  prefferedAppointmentDate DateTime
+  appointmentTime          AppointmentTime
+  status                   AppointmentStatus
+  createdAt                DateTime          @default(now())
+  updatedAt                DateTime          @updatedAt
+
+  user    User             @relation("AppointmentsToUser", fields: [userId], references: [userId])
+  dentist User             @relation("AppointmentsToDentist", fields: [dentistId], references: [userId])
+  dental  DentalInsurance? @relation(fields: [dentalInsuranceId], references: [id])
+}
+
+model DentalInsurance {
+  id                   Int            @id @default(autoincrement())
+  userId               String
+  insuranceName        String
+  insuranceGroupNumber String
+  subscriberId         String
+  subscriberName       String
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  appointment          Appointments[]
+  user                 User           @relation(fields: [userId], references: [userId])
+}

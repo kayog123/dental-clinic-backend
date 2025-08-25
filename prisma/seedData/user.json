@@ -1,0 +1,18 @@
+[
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174001",
+        "email":  "bobsmith@gmail.com",
+        "firstName" :  "Bob",
+        "lastName"  :  "Smith",
+        "profileImage" :"123e4567-e89b-12d3-a456-426614174001",
+        "accountType"  :"PATIENT"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174002",
+        "email":  "jovanni.jungco@gmail.com",
+        "firstName" :  "Jovanni",
+        "lastName"  :  "Jungco",
+        "profileImage" :"123e4567-e89b-12d3-a456-426614174001",
+        "accountType"  :"PATIENT"
+  } 
+]
