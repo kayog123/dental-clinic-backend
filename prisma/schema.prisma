@@ -30,12 +30,13 @@ model User {
 
   patientAppointment Appointments[]    @relation("AppointmentsToUser")
   dentistAppointment Appointments[]    @relation("AppointmentsToDentist")
+  serviceDentist     ServiceDentist[]  @relation("ServiceToDentist")
   dental             DentalInsurance[]
 }
 
 enum AppointmentType {
-  NPE
-  NPE_NP_SRP
+  NPE //NEW PATIENT EXAM
+  NPE_NP_SRP //NEW PATIENT EXAM - NP/SRP
   CLEANING
   FILLING
   EXTRACTION
@@ -90,4 +91,15 @@ model DentalInsurance {
   updatedAt            DateTime       @updatedAt
   appointment          Appointments[]
   user                 User           @relation(fields: [userId], references: [userId])
+}
+
+model ServiceDentist {
+  id          Int             @id @default(autoincrement())
+  dentistId   String
+  serviceCode AppointmentType
+  serviceName String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @default(now()) @updatedAt
+
+  dentist User @relation("ServiceToDentist", fields: [dentistId], references: [userId])
 }

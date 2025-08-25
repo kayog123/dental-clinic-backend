@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma";
+import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 const prisma = new PrismaClient();
@@ -23,7 +23,7 @@ async function deleteAllData(orderedFileNames: string[]) {
 async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
-  const orderedFileNames = ["user.json", "appointments.json"];
+  const orderedFileNames = ["user.json", "serviceDentist.json"];
 
   await deleteAllData(orderedFileNames);
 

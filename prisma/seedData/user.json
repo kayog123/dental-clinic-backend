@@ -4,15 +4,47 @@
         "email":  "bobsmith@gmail.com",
         "firstName" :  "Bob",
         "lastName"  :  "Smith",
-        "profileImage" :"123e4567-e89b-12d3-a456-426614174001",
-        "accountType"  :"PATIENT"
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
   },
   {
         "userId":"123e4567-e89b-12d3-a456-426614174002",
         "email":  "jovanni.jungco@gmail.com",
         "firstName" :  "Jovanni",
         "lastName"  :  "Jungco",
-        "profileImage" :"123e4567-e89b-12d3-a456-426614174001",
-        "accountType"  :"PATIENT"
-  } 
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174003",
+        "email":  "angel_anne.jungco@gmail.com",
+        "firstName" :  "Angel Anne",
+        "lastName"  :  "Jungco",
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174004",
+        "email":  "prince.ivann.jungco@gmail.com",
+        "firstName" :  "Prince Ivann",
+        "lastName"  :  "Jungco",
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174005",
+        "email":  "james.astronomo@gmail.com",
+        "firstName" :  "James",
+        "lastName"  :  "Astronomo",
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174006",
+        "email":  "jasper.sanluis@gmail.com",
+        "firstName" :  "Jasper",
+        "lastName"  :  "San Luis",
+        "profileImage" :"",
+        "accountType"  :"DENTIST"
+  }
 ]

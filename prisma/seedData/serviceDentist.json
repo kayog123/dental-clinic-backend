@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174001",
+        "serviceCode": "NPE",
+        "serviceName": "New Patient Exam"
+    }, 
+    {
+        "id": 2,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174002",
+        "serviceCode": "NPE_NP_SRP",
+        "serviceName": "New Patient Exam - NP/SRP"
+    },
+    {
+        "id": 3,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174003",
+        "serviceCode": "CLEANING",
+        "serviceName": "Cleaning"
+    },
+    {
+        "id": 4,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174004",
+        "serviceCode": "FILLING",
+        "serviceName": "Filling"
+    },
+    {
+        "id": 5,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174005",
+        "serviceCode": "EXTRACTION",
+        "serviceName": "Extraction"
+    },
+    {
+        "id": 6,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174006",
+        "serviceCode": "ROOT_CANAL",
+        "serviceName": "Root Canal"
+    },
+    {
+        "id": 7,
+        "dentistId": "123e4567-e89b-12d3-a456-426614174006",
+        "serviceCode": "CROWN",
+        "serviceName": "Crown"
+    }
+]
