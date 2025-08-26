@@ -69,6 +69,39 @@ export const getUserAppointment = async (
   }
 };
 
+export const getDentistAppointmentDay = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId, startOfDay, endOfDay } = req.body as unknown as {
+    userId: string;
+    startOfDay: string;
+    endOfDay: string;
+  };
+  try {
+    const users = await prisma.appointments.findMany({
+      select: {
+        appointmentTime: true,
+      },
+      where: {
+        userId: userId as string,
+        prefferedAppointmentDate: {
+          gte: startOfDay, // >= 2025-08-01 00:00:00
+          lt: endOfDay, // < 2025-08-02 00:00:00 (or use the nextDay approach)
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    res.json(users);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error retrieving users: ${error.message}` });
+  }
+};
+
 export const updateAppointment = async (
   req: Request,
   res: Response

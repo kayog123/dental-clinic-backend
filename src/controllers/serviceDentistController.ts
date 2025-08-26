@@ -8,6 +8,7 @@ export const getDentistList = async (
   res: Response
 ): Promise<void> => {
   const { serviceCode } = req.body;
+  req.params;
   try {
     const dentists = await prisma.serviceDentist.findMany({
       where: {

@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes";
 import appointmentRoutes from "./routes/appointmentRoutes";
 import serviceDentistRoutes from "./routes/serviceDentistRoute";
+import insuranceRoutes from "./routes/insuranceRoutes";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/service", serviceDentistRoutes);
+app.use("/api/insurance", insuranceRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the dental care API server");

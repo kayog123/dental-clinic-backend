@@ -70,7 +70,7 @@ model Appointments {
   dentalInsuranceId        Int?
   appType                  AppointmentType
   prefferedAppointmentDate DateTime
-  appointmentTime          AppointmentTime
+  appointmentTime          String
   status                   AppointmentStatus
   createdAt                DateTime          @default(now())
   updatedAt                DateTime          @updatedAt

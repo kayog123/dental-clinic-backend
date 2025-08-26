@@ -46,5 +46,13 @@
         "lastName"  :  "San Luis",
         "profileImage" :"",
         "accountType"  :"DENTIST"
+  },
+  {
+        "userId":"123e4567-e89b-12d3-a456-426614174007",
+        "email":  "kayog.dev@gmail.com",
+        "firstName" :  "Kayog",
+        "lastName"  :  "DEV",
+        "profileImage" :"",
+        "accountType"  :"PATIENT"
   }
 ]
