@@ -129,7 +129,42 @@ export const getUserAppointment = async (
     res.status(500).json({ message: "Error retrieving users" });
   }
 };
-
+export const getAppointmentId = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { appointmentId } = req.params;
+  try {
+    const appointment = await prisma.appointments.findUnique({
+      where: {
+        id: Number(appointmentId),
+      },
+      include: {
+        dentist: {
+          select: {
+            userId: true,
+            firstName: true, // Select only the fullName field from the user table
+            lastName: true,
+            profileImage: true,
+          },
+        },
+        dental: {
+          select: {
+            insuranceName: true,
+            insuranceGroupNumber: true,
+            subscriberId: true,
+            subscriberName: true,
+          },
+        },
+      },
+    });
+    res.json(appointment);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error retrieving appointment: ${error.message}` });
+  }
+};
 export const getDentistAppointmentDay = async (
   req: Request,
   res: Response
@@ -145,17 +180,63 @@ export const getDentistAppointmentDay = async (
         appointmentTime: true,
       },
       where: {
-        userId: userId as string,
+        dentistId: userId as string,
         prefferedAppointmentDate: {
-          gte: startOfDay, // >= 2025-08-01 00:00:00
-          lt: endOfDay, // < 2025-08-02 00:00:00 (or use the nextDay approach)
+          gte: new Date(startOfDay), // >= 2025-08-01 00:00:00
+          lt: new Date(endOfDay), // < 2025-08-02 00:00:00 (or use the nextDay approach)
         },
       },
       orderBy: {
         createdAt: "desc",
       },
     });
-    res.json(users);
+    res.status(200).json(users);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error retrieving users: ${error.message}` });
+  }
+};
+
+export const getUserAppointmentByDate = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId, startOfDay, endOfDay } = req.body as unknown as {
+    userId: string;
+    startOfDay: string;
+    endOfDay: string;
+  };
+  try {
+    const users = await prisma.appointments.findMany({
+      where: {
+        userId: userId as string,
+        prefferedAppointmentDate: {
+          gte: startOfDay, // >= 2025-08-01 00:00:00
+          lt: endOfDay, // < 2025-08-02 00:00:00 (or use the nextDay approach)
+        },
+      },
+      select: {
+        id: true,
+        note: true,
+        appType: true,
+        prefferedAppointmentDate: true,
+        appointmentTime: true,
+        status: true,
+        dentist: {
+          select: {
+            userId: true,
+            firstName: true, // Select only the fullName field from the user table
+            lastName: true,
+            profileImage: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    res.status(200).json(users);
   } catch (error: any) {
     res
       .status(500)
