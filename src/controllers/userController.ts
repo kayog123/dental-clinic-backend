@@ -36,6 +36,7 @@ export const createUser = async (
   res: Response
 ): Promise<void> => {
   try {
+    console.log("create users", req.body);
     const { userId, email, firstName, lastName, profileImage, accountType } =
       req.body;
     const newUser = await prisma.user.create({

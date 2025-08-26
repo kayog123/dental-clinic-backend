@@ -13,6 +13,7 @@ export const createInsurance = async (
       subscriberId,
       subscriberName,
     } = req.body;
+
     const dentalInsurance = await prisma.dentalInsurance.create({
       data: {
         userId,

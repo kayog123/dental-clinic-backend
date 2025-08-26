@@ -2,6 +2,44 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+export type AppointmentStatusType =
+  | "PENDING"
+  | "APPROVED"
+  | "REJECTED"
+  | "CANCELLED"
+  | "COMPLETED"
+  | "RESCHEDULED";
+
+export type AppointmentTypeProps =
+  | "NPE"
+  | "NPE_NP_SRP" //NEW PATIENT EXAM - NP/SRP
+  | "CLEANING"
+  | "FILLING"
+  | "EXTRACTION"
+  | "ROOT_CANAL"
+  | "CROWN";
+
+export interface CreateAppointmentParams {
+  userId: string;
+  dentistId: string;
+  patientGivenName: string;
+  patientLastName: string;
+  dateOfBirth: string;
+  note?: string;
+  dentalInsuranceId?: number;
+  appType: AppointmentTypeProps;
+  prefferedAppointmentDate: string;
+  appointmentTime: string;
+  status: AppointmentStatusType;
+}
+
+interface CreateInsuranceParams {
+  hasInsurance: boolean;
+  insuranceName: string;
+  insuranceGroupNumber: string;
+  subscriberId: string;
+  subscriberName: string;
+}
 export const createAppointment = async (
   req: Request,
   res: Response
@@ -14,32 +52,55 @@ export const createAppointment = async (
       patientLastName,
       dateOfBirth,
       note,
-      dentalInsuranceId,
       appType,
       prefferedAppointmentDate,
       appointmentTime,
       status,
-    } = req.body;
-    const newAppointment = await prisma.appointments.create({
-      data: {
+      hasInsurance,
+      insuranceName,
+      insuranceGroupNumber,
+      subscriberId,
+      subscriberName,
+    } = req.body as CreateAppointmentParams & CreateInsuranceParams;
+    const result = await prisma.$transaction(async (tx) => {
+      const newAppointmentParams = {
         userId,
         dentistId,
         patientGivenName,
         patientLastName,
         dateOfBirth,
         note,
-        dentalInsuranceId,
         appType,
         prefferedAppointmentDate,
         appointmentTime,
         status,
-      },
+      } as CreateAppointmentParams;
+
+      if (hasInsurance) {
+        const dentalInsurance = await tx.dentalInsurance.create({
+          data: {
+            userId,
+            insuranceName,
+            insuranceGroupNumber,
+            subscriberId,
+            subscriberName,
+          },
+        });
+        newAppointmentParams.dentalInsuranceId = dentalInsurance.id;
+      }
+
+      const newAppointment = await tx.appointments.create({
+        data: newAppointmentParams,
+      });
+
+      return { newAppointment };
     });
-    res.status(201).json(newAppointment);
+
+    res.status(201).json(result);
   } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: `Error creating appointment: ${error.message}` });
+    res.status(500).json({
+      message: `Creating appointment failed and rollback: ${error.message}`,
+    });
   }
 };
 
