@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "target": "esnext",
     "types": ["node"],
+    "noImplicitAny": false,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
