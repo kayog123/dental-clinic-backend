@@ -27,3 +27,52 @@ This is a Node.js backend application built with Express.js, utilizing Prisma as
 ## Frontend Repository
 
 The frontend repository can be found [here](https://github.com/kayog123/dentail-clinic-frontend).
+
+#### Getting Started on building
+
+- Clone the repository to your local machine
+
+```bash
+git clone git@github.com:kayog123/dental-clinic-backend.git
+```
+
+- Install the dependencies
+
+```bash
+npm i
+```
+
+- Start the application
+
+```bash
+npm run dev
+```
+
+- Build the feature and deploy to the main branch
+- If you have schema changes, run the following command to generate the Prisma Client
+
+```bash
+npx prisma generate
+```
+
+then migrate
+
+```bash
+npx prisma migrate dev --name init
+```
+
+## Deployment
+
+The application can be deployed to AWS using the provided `deploy.sh` script. The script will build the Docker image, push it to the ECR, and deploy the application to EKS.
+
+```bash
+./deploy.sh
+```
+
+## Database Schema
+
+Please check the [schema.prisma](schema.prisma) file for the database schema and relationships.
+
+## License
+
+This project is licensed under the MIT License.
