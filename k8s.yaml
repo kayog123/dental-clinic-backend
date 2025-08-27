@@ -15,6 +15,12 @@ spec:
         - name: dental-backend-app
           image: 754071320815.dkr.ecr.ap-southeast-1.amazonaws.com/dental-express-eks:latest  
           imagePullPolicy: Always
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DATABASE_URL
           resources:
             requests:
               cpu: "100m"
